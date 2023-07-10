@@ -21,6 +21,7 @@ program
   )
   .option('--test <name>', 'run the test specified by name')
   .option('-u,--unadjusted', 'dsisable the randum number adjustment')
+  .option('--breaks', 'use breaks')
   .option('--ref', 'use reference sample of random numbers')
   .option('--coupon', 'count Coupon collector')
   .option('-l', 'print length values of Coupon collector')
@@ -51,6 +52,9 @@ if (options.unadjusted) {
 if (options.ref) {
   xrandConfig.mode = 'ref';
   xrandConfig.refData = randIntegers;
+}
+if (options.breaks) {
+  xrandConfig.mode = 'breaks';
 }
 
 xrand(0, 0, xrandConfig);

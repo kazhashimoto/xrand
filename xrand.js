@@ -436,6 +436,24 @@ function _xrand_unadjusted(min, max) {
   return min + n;
 }
 
+function _xrand_breaks(min, max) {
+  const range = max - min;
+  const breaks = new Array(range).fill(0).map((x, i) => (i + 1) / (range + 1));
+  const r = config.generator();
+  let n = -1;
+  for (let i = 0; i < breaks.length; i++) {
+    if (r < breaks[i]) {
+      n = i;
+      break;
+    }
+  }
+  if (n < 0) {
+    n = range;
+  }
+  record(n);
+  return min + n;
+}
+
 // DEBUG--
 function printStat() {
   for (const p in stat) {
@@ -494,6 +512,8 @@ function xrand(min, max, arg) {
       return _xrand_ref(min, max);
     case 'unadjusted':
       return _xrand_unadjusted(min, max);
+    case 'breaks':
+      return _xrand_breaks(min, max);
     default:
       break;
   }
